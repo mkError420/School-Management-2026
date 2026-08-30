@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { 
-  Shield, Lock, User as UserIcon, Eye, EyeOff, CheckCircle2, 
-  AlertCircle, ArrowRight, GraduationCap, Globe, Sparkles, 
-  School, KeyRound, Users, HelpCircle, Check, Info, 
+import {
+  Shield, Lock, User as UserIcon, Eye, EyeOff, CheckCircle2,
+  AlertCircle, ArrowRight, GraduationCap, Globe, Sparkles,
+  School, KeyRound, Users, HelpCircle, Check, Info,
   FileText, Database, ShieldCheck, Landmark, Smartphone
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
@@ -150,7 +150,7 @@ export const LoginPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between selection:bg-emerald-500/30 selection:text-emerald-300 relative overflow-hidden font-sans">
-      
+
       {/* Background Ambient Glows */}
       <div className="absolute -top-40 -left-40 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute top-1/3 -right-40 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
@@ -165,10 +165,10 @@ export const LoginPage: React.FC = () => {
           <div>
             <div className="flex items-center gap-2">
               <span className="text-base sm:text-lg font-extrabold text-white tracking-tight">
-                {lang === 'bn' ? 'সোনার পাঠশালা ইআরপি' : 'SonarPathshala ERP'}
+                {lang === 'bn' ? 'বিডি স্কুল ম্যানেজমেন্ট সিস্টেম' : 'BD School Management System'}
               </span>
               <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-800/80 uppercase">
-                v4.2.0
+                v2.0
               </span>
             </div>
             <p className="text-xs text-slate-400 font-medium">
@@ -198,11 +198,10 @@ export const LoginPage: React.FC = () => {
       {/* Main Login Canvas */}
       <main className="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-8 z-10">
         <div className="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          
+
           {/* Left Presentation Column */}
           <div className="lg:col-span-6 space-y-6 hidden lg:block pr-4">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5" />
               <span>{lang === 'bn' ? 'স্মার্ট বাংলাদেশ এডুকেশন পোর্টাল' : 'Smart Bangladesh Education Portal'}</span>
             </div>
 
@@ -262,23 +261,12 @@ export const LoginPage: React.FC = () => {
                 </div>
               </div>
             </div>
-
-            <div className="pt-2 flex items-center gap-4 text-xs text-slate-500 font-mono">
-              <span className="flex items-center gap-1.5 text-emerald-400">
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>MySQL 8.0+ Ready</span>
-              </span>
-              <span>•</span>
-              <span>PHP 8.2 PDO</span>
-              <span>•</span>
-              <span>Asia/Dhaka (+06:00)</span>
-            </div>
           </div>
 
           {/* Right Login Form Card */}
           <div className="lg:col-span-6 w-full">
             <div className="rounded-3xl bg-slate-900/90 border border-slate-800 p-6 sm:p-8 shadow-2xl backdrop-blur-xl relative">
-              
+
               {/* Form Title & Subtitle */}
               <div className="mb-6">
                 <div className="flex items-center justify-between">
@@ -290,9 +278,9 @@ export const LoginPage: React.FC = () => {
                   </span>
                 </div>
                 <p className="text-xs text-slate-400 mt-1">
-                  {lang === 'bn' 
-                    ? 'আপনার ইউজার আইডি এবং পাসওয়ার্ড দিয়ে লগইন করুন।' 
-                    : 'Enter your credentials or click any demo role below.'}
+                  {lang === 'bn'
+                    ? 'আপনার ইউজার আইডি এবং পাসওয়ার্ড দিয়ে লগইন করুন।'
+                    : 'Click any demo role below.'}
                 </p>
               </div>
 
@@ -300,7 +288,7 @@ export const LoginPage: React.FC = () => {
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                    {lang === 'bn' ? '⚡ টেস্ট লগইন অ্যাকাউন্ট নির্বাচন করুন' : '⚡ Quick 1-Click Role Login'}
+                    {lang === 'bn' ? ' টেস্ট লগইন অ্যাকাউন্ট নির্বাচন করুন' : ' Quick 1-Click Role Login'}
                   </span>
                   <span className="text-[10px] text-emerald-400 font-mono">
                     Pass: admin123
@@ -315,17 +303,16 @@ export const LoginPage: React.FC = () => {
                         key={acc.role}
                         type="button"
                         onClick={() => handleSelectDemo(acc)}
-                        className={`flex flex-col items-center p-2 rounded-xl transition border text-center relative ${
-                          isSelected
-                            ? 'bg-emerald-500/15 border-emerald-500 text-white shadow-md shadow-emerald-950'
-                            : 'bg-slate-950/60 border-slate-800/80 hover:bg-slate-800 text-slate-400 hover:text-slate-200'
-                        }`}
+                        className={`flex flex-col items-center p-2 rounded-xl transition border text-center relative ${isSelected
+                          ? 'bg-emerald-500/15 border-emerald-500 text-white shadow-md shadow-emerald-950'
+                          : 'bg-slate-950/60 border-slate-800/80 hover:bg-slate-800 text-slate-400 hover:text-slate-200'
+                          }`}
                         title={`Click to fill: ${acc.titleEn} (${acc.username})`}
                       >
-                        <img 
-                          src={acc.avatar} 
+                        <img
+                          src={acc.avatar}
                           alt={acc.titleEn}
-                          className="w-7 h-7 rounded-full object-cover mb-1 ring-1 ring-slate-700" 
+                          className="w-7 h-7 rounded-full object-cover mb-1 ring-1 ring-slate-700"
                         />
                         <span className="text-[10px] font-bold truncate max-w-full">
                           {lang === 'bn' ? acc.titleBn.split(' ')[0] : acc.titleEn.split(' ')[0]}
@@ -358,7 +345,7 @@ export const LoginPage: React.FC = () => {
 
               {/* Login Form */}
               <form onSubmit={handleSubmit} className="space-y-4">
-                
+
                 {/* Username / Phone / Email */}
                 <div>
                   <label className="block text-xs font-bold text-slate-300 mb-1.5">
@@ -439,7 +426,7 @@ export const LoginPage: React.FC = () => {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm shadow-lg shadow-emerald-950/60 hover:shadow-emerald-900/40 transition flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+                    className="w-full py-3 px-4 rounded-xl bg-gray-500 hover:bg-gray-600 hover:from-gray-500 hover:to-gray-600 text-white font-bold text-sm shadow-lg shadow-gray-500/60 hover:shadow-gray-600/40 transition flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
                   >
                     {isLoading ? (
                       <>
@@ -487,9 +474,9 @@ export const LoginPage: React.FC = () => {
                 {lang === 'bn' ? 'পাসওয়ার্ড পুনরুদ্ধার নির্দেশিকা' : 'Password Recovery Assistance'}
               </h3>
             </div>
-            
+
             <p className="text-xs text-slate-300 leading-relaxed mb-4">
-              {lang === 'bn' 
+              {lang === 'bn'
                 ? 'বিদ্যালয়ের নিরাপত্তা বিধিমালার কারণে স্বয়ংক্রিয় পাসওয়ার্ড পরিবর্তন নিয়ন্ত্রিত। অনুগ্রহ করে বিদ্যালয় প্রধান শিক্ষক অথবা সিস্টেম অ্যাডমিনিস্ট্রেটরের সাথে যোগাযোগ করুন।'
                 : 'For institutional safety, student & faculty credentials are reset centrally by the Headmaster or School IT Administrator.'}
             </p>
@@ -514,14 +501,14 @@ export const LoginPage: React.FC = () => {
       <footer className="px-4 sm:px-8 py-3 border-t border-slate-800/80 bg-slate-950/80 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 font-mono z-10 gap-2 sm:gap-0">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-500" />
-          <span>SonarPathshala ERP • Bangladesh School System</span>
+          <span>Bangladesh School System</span>
         </div>
         <div className="flex items-center gap-4 text-[10px]">
           <span>EIIN: 108244</span>
           <span>•</span>
           <span>BDRIS AES-256 Compliant</span>
           <span>•</span>
-          <span className="text-emerald-400 font-semibold">2026 Production</span>
+          <span className="text-emerald-400 font-semibold">{new Date().getFullYear()} Production</span>
         </div>
       </footer>
 

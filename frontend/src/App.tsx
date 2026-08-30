@@ -105,7 +105,7 @@ const MainLayout: React.FC = () => {
           <span className="hidden md:inline text-slate-500">JWT: AUTHENTICATED</span>
         </div>
         <div className="flex items-center space-x-3 sm:space-x-4 text-[10px] text-slate-500">
-          <span className="text-slate-400">NCTB 2026 Ready</span>
+          <span className="text-slate-400">NCTB {new Date().getFullYear()} Ready</span>
           <span className="w-1 h-1 bg-slate-700 rounded-full"></span>
           <span>GDPR Compliant</span>
           <span className="w-1 h-1 bg-slate-700 rounded-full"></span>
