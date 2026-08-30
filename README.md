@@ -1,4 +1,4 @@
-# 🇧🇩 SonarPathshala (সোনার পাঠশালা) — Complete School Management ERP
+# School Management ERP
 
 A production-ready, modern Bangladeshi High School & College ERP platform with full Frontend, Backend REST API, and Relational MySQL 8.0 Database.
 
