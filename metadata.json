@@ -1,0 +1,6 @@
+{
+  "name": "SonarPathshala - Bangladeshi School Management System",
+  "description": "Comprehensive School ERP for Bangladeshi schools featuring bilingual Bangla/English attendance with automated SMS alerts, NCTB GPA 5.0 gradebook, teacher payroll in BDT, student profiles, guardian portal, MySQL & phpMyAdmin schema exporter, and offline synchronization.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

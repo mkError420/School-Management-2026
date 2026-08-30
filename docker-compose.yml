@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  # 1. MySQL 8.0 Database Service
+  database:
+    image: mysql:8.0
+    container_name: sonarpathshala_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: sonarpathshala_school_db
+      MYSQL_USER: sonar_user
+      MYSQL_PASSWORD: sonar_secure_password_2026
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-time-zone=+06:00
+
+  # 2. PHP 8.2 REST API Service
+  backend-api:
+    image: php:8.2-apache
+    container_name: sonarpathshala_php_api
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - ./backend:/var/www/html/api
+    environment:
+      DB_HOST: database
+      DB_PORT: 3306
+      DB_NAME: sonarpathshala_school_db
+      DB_USER: sonar_user
+      DB_PASS: sonar_secure_password_2026
+    depends_on:
+      - database
+
+  # 3. React Vite Web Application
+  frontend:
+    image: node:20-alpine
+    container_name: sonarpathshala_frontend
+    restart: always
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    command: sh -c "npm install && npm run build && npm run preview -- --port 3000 --host 0.0.0.0"
+    depends_on:
+      - backend-api
+
+volumes:
+  db_data:

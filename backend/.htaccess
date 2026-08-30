@@ -1,0 +1,16 @@
+# SonarPathshala Backend Apache Configuration
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With, X-Auth-Token"
+</IfModule>
+
+# Protect sensitive files
+<FilesMatch "\.(env|sql|log|md|json)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# PHP Execution & Default Charset
+AddDefaultCharset UTF-8
+Options -Indexes

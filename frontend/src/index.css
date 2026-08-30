@@ -1,0 +1,195 @@
+@import "tailwindcss";
+
+/* =============================================
+   CUSTOM THEME: School Management Color System
+   Primary:   #FEE685 (warm golden yellow)
+   Secondary: #ECFCCA (light lime green)
+   Neutral:   #90A1B9 (muted blue-gray)
+   Background: dark navy/slate base
+   ============================================= */
+
+@layer base {
+  :root {
+    --color-primary:        #FEE685;
+    --color-primary-light:  #FFF3B0;
+    --color-primary-dark:   #D4B800;
+    --color-secondary:      #ECFCCA;
+    --color-secondary-dark: #BFEC7A;
+    --color-neutral:        #90A1B9;
+    --color-neutral-light:  #B8C6D8;
+    --color-neutral-dark:   #5E738F;
+
+    /* Background layers (kept dark for premium feel) */
+    --color-bg-base:    #0B0F1A;
+    --color-bg-surface: #111827;
+    --color-bg-card:    #1A2235;
+    --color-bg-hover:   #1F2D45;
+    --color-border:     #263450;
+  }
+
+  body {
+    font-family: 'Open Sans', 'Hind Siliguri', 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background-color: var(--color-bg-base);
+    color: var(--color-secondary);
+  }
+
+  h1, h2, h3, h4, h5, h6,
+  .font-bold, .font-semibold, .font-extrabold, .font-black {
+    font-family: 'Montserrat', 'Open Sans', 'Hind Siliguri', sans-serif;
+  }
+
+  button, input, select, textarea, label {
+    font-family: 'Roboto', 'Open Sans', sans-serif;
+  }
+
+  .font-bangla {
+    font-family: 'Hind Siliguri', 'Open Sans', sans-serif;
+  }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--color-bg-surface); }
+  ::-webkit-scrollbar-thumb { background: var(--color-neutral-dark); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-neutral); }
+}
+
+/* =============================================
+   GLOBAL COLOR OVERRIDES
+   Map Tailwind utility classes to our palette
+   via CSS variable overrides
+   ============================================= */
+
+/* ── Primary accent (was emerald) ── */
+.text-emerald-400,
+.text-emerald-300,
+.text-emerald-500 { color: var(--color-primary) !important; }
+
+.bg-emerald-600,
+.bg-emerald-500,
+.bg-emerald-700 { background-color: var(--color-primary-dark) !important; }
+
+.bg-emerald-600:hover,
+.bg-emerald-500:hover { background-color: var(--color-primary) !important; }
+
+.hover\:bg-emerald-500:hover { background-color: var(--color-primary) !important; }
+.hover\:bg-emerald-600:hover { background-color: var(--color-primary-dark) !important; }
+
+.border-emerald-500,
+.border-emerald-600,
+.border-emerald-700,
+.border-emerald-800 { border-color: var(--color-primary-dark) !important; }
+
+.bg-emerald-950,
+.bg-emerald-950\/70,
+.bg-emerald-950\/40 { background-color: rgba(212, 184, 0, 0.10) !important; }
+
+.hover\:bg-emerald-950\/40:hover { background-color: rgba(254, 230, 133, 0.15) !important; }
+.hover\:bg-emerald-900\/80:hover { background-color: rgba(254, 230, 133, 0.20) !important; }
+
+.text-emerald-600 { color: var(--color-primary-dark) !important; }
+.text-emerald-700 { color: var(--color-primary-dark) !important; }
+
+/* ── Background surfaces (was slate-950 / slate-900 / slate-800) ── */
+.bg-slate-950  { background-color: var(--color-bg-base)    !important; }
+.bg-slate-900  { background-color: var(--color-bg-surface) !important; }
+.bg-slate-800  { background-color: var(--color-bg-card)    !important; }
+.bg-slate-850  { background-color: var(--color-bg-card)    !important; }
+
+.hover\:bg-slate-800:hover { background-color: var(--color-bg-hover) !important; }
+.hover\:bg-slate-700:hover { background-color: var(--color-bg-hover) !important; }
+
+/* ── Borders (was slate borders) ── */
+.border-slate-800,
+.border-slate-700,
+.border-slate-600 { border-color: var(--color-border) !important; }
+
+/* ── Text (was slate text) ── */
+.text-slate-100,
+.text-slate-200  { color: var(--color-secondary) !important; }
+
+.text-slate-300,
+.text-slate-400  { color: var(--color-neutral-light) !important; }
+
+.text-slate-500,
+.text-slate-600  { color: var(--color-neutral) !important; }
+
+.hover\:text-white:hover { color: var(--color-primary-light) !important; }
+.hover\:text-slate-200:hover { color: var(--color-secondary) !important; }
+
+/* ── Ring / focus colors ── */
+.ring-emerald-500,
+.focus\:ring-emerald-500:focus { --tw-ring-color: var(--color-primary) !important; }
+
+/* ── Gradient backgrounds ── */
+.from-slate-900 { --tw-gradient-from: var(--color-bg-surface) !important; }
+.to-slate-950   { --tw-gradient-to: var(--color-bg-base) !important; }
+.via-slate-900  { --tw-gradient-via: var(--color-bg-surface) !important; }
+
+/* ── Sidebar specific ── */
+.sidebar-active {
+  background: linear-gradient(90deg, rgba(254,230,133,0.15) 0%, transparent 100%) !important;
+  border-left: 3px solid var(--color-primary) !important;
+  color: var(--color-primary) !important;
+}
+
+/* ── Card / panel accent glow ── */
+.ring-1.ring-emerald-500\/20 { box-shadow: 0 0 0 1px rgba(254,230,133,0.2) !important; }
+
+/* ── Stat cards gradient accents ── */
+.from-emerald-500 { --tw-gradient-from: var(--color-primary) !important; }
+.to-emerald-700   { --tw-gradient-to: var(--color-primary-dark) !important; }
+
+/* ── Login page specific overrides ── */
+.login-primary-btn {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%) !important;
+  color: #0B0F1A !important;
+}
+
+/* ── Badge / pill colors ── */
+.bg-emerald-900\/30 { background-color: rgba(254,230,133,0.08) !important; }
+.text-emerald-300  { color: var(--color-primary) !important; }
+
+/* ── Table row highlights ── */
+.hover\:bg-slate-800\/50:hover { background-color: rgba(31, 45, 69, 0.5) !important; }
+.even\:bg-slate-900\/30:nth-child(even) { background-color: rgba(17, 24, 39, 0.3) !important; }
+
+/* ── Input fields ── */
+input:focus, select:focus, textarea:focus {
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 2px rgba(254, 230, 133, 0.15) !important;
+}
+
+/* ── Blue/indigo overrides (secondary accent) ── */
+.text-blue-400,
+.text-blue-300 { color: var(--color-secondary-dark) !important; }
+
+.bg-blue-600,
+.bg-blue-500   { background-color: var(--color-neutral-dark) !important; }
+
+.border-blue-500,
+.border-blue-700 { border-color: var(--color-neutral) !important; }
+
+/* ── Purple/violet overrides ── */
+.text-purple-400,
+.text-violet-400 { color: var(--color-secondary-dark) !important; }
+
+/* ── Cyan/teal overrides ── */
+.text-cyan-400,
+.text-teal-400 { color: var(--color-secondary) !important; }
+
+/* ── Yellow overrides ── */
+.text-yellow-400,
+.text-amber-400 { color: var(--color-primary) !important; }
+
+/* ── Smooth transitions globally ── */
+* { transition-property: color, background-color, border-color, box-shadow; transition-duration: 150ms; transition-timing-function: ease; }
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .no-print { display: none !important; }
+  .print-only { display: block !important; }
+  .page-break { page-break-before: always; }
+}
