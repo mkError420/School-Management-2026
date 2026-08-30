@@ -21,7 +21,7 @@ export const NoticeBoardModule: React.FC = () => {
   const [formCategory, setFormCategory] = useState<SchoolNotice['category']>("academic");
   const [formPriority, setFormPriority] = useState<SchoolNotice['priority']>("normal");
   const [formTarget, setFormTarget] = useState<SchoolNotice['targetAudience']>("all");
-  const [sendSmsBroadcast, setSendSmsBroadcast] = useState<boolean>(true);
+
 
   const handleSubmitNotice = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,7 +36,7 @@ export const NoticeBoardModule: React.FC = () => {
       targetAudience: formTarget,
       publishedBy: currentUser.name,
       publishedDate: "2026-08-29",
-      smsBroadcastSent: sendSmsBroadcast
+      smsBroadcastSent: false
     };
 
     addNotice(newNotice);
@@ -62,7 +62,7 @@ export const NoticeBoardModule: React.FC = () => {
           <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
             {lang === 'bn' 
               ? "একাডেমিক সার্কুলার, ছুটির নোটিশ ও জরুরি আবহাওয়া সতর্কতা প্রচার" 
-              : "Official circulars, holiday calendars, and urgent SMS push broadcasts"}
+              : "Official circulars, holiday calendars, and academic announcements"}
           </p>
         </div>
 
@@ -127,12 +127,7 @@ export const NoticeBoardModule: React.FC = () => {
 
             <div className="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-[10px] text-slate-400">
               <span>Published by: <strong className="text-slate-300">{notice.publishedBy}</strong></span>
-              {notice.smsBroadcastSent && (
-                <span className="text-emerald-400 font-semibold flex items-center gap-1">
-                  <MessageSquare className="w-3 h-3" />
-                  SMS Sent
-                </span>
-              )}
+
             </div>
           </div>
         ))}
@@ -242,15 +237,7 @@ export const NoticeBoardModule: React.FC = () => {
                 />
               </div>
 
-              <label className="flex items-center gap-2 cursor-pointer pt-1">
-                <input
-                  type="checkbox"
-                  checked={sendSmsBroadcast}
-                  onChange={(e) => setSendSmsBroadcast(e.target.checked)}
-                  className="w-4 h-4 text-emerald-500 rounded bg-slate-950 border-slate-800"
-                />
-                <span className="font-medium text-slate-300">Auto-broadcast SMS alert to parents</span>
-              </label>
+
 
               <div className="flex gap-2 pt-2">
                 <button

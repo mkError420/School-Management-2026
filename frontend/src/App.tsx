@@ -7,7 +7,7 @@ import { LoginPage } from './components/LoginPage';
 
 // Lazy load heavy modules for ultra-fast initial load
 const AttendanceModule = lazy(() => import('./components/AttendanceModule').then(m => ({ default: m.AttendanceModule })));
-const SMSGatewayModule = lazy(() => import('./components/SMSGatewayModule').then(m => ({ default: m.SMSGatewayModule })));
+
 const GradebookModule = lazy(() => import('./components/GradebookModule').then(m => ({ default: m.GradebookModule })));
 const PayrollModule = lazy(() => import('./components/PayrollModule').then(m => ({ default: m.PayrollModule })));
 const StudentProfileModule = lazy(() => import('./components/StudentProfileModule').then(m => ({ default: m.StudentProfileModule })));
@@ -35,13 +35,12 @@ const MainLayout: React.FC = () => {
           <DashboardOverview 
             onNavigate={(tab) => setCurrentTab(tab)}
             onOpenNewStudent={() => setCurrentTab('students')}
-            onOpenUrgentNotice={() => setCurrentTab('sms')}
+            onOpenUrgentNotice={() => setCurrentTab('notices')}
           />
         );
       case 'attendance':
         return <Suspense fallback={<ModuleLoader />}><AttendanceModule /></Suspense>;
-      case 'sms':
-        return <Suspense fallback={<ModuleLoader />}><SMSGatewayModule /></Suspense>;
+
       case 'gradebook':
         return <Suspense fallback={<ModuleLoader />}><GradebookModule /></Suspense>;
       case 'payroll':
@@ -62,14 +61,14 @@ const MainLayout: React.FC = () => {
           <DashboardOverview 
             onNavigate={(tab) => setCurrentTab(tab)}
             onOpenNewStudent={() => setCurrentTab('students')}
-            onOpenUrgentNotice={() => setCurrentTab('sms')}
+            onOpenUrgentNotice={() => setCurrentTab('notices')}
           />
         );
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col font-sans antialiased" style={{background:'#0B0F1A', color:'#ECFCCA', userSelect:'none'}} onSelect={undefined}>
+    <div className="min-h-screen flex flex-col font-sans antialiased" style={{background:'#0B0F1A', color:'#ECFCCA'}}>
       
       {/* Top Navigation Bar */}
       <Header 

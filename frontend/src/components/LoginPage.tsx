@@ -216,8 +216,8 @@ export const LoginPage: React.FC = () => {
 
             <p className="text-sm text-slate-400 leading-relaxed">
               {lang === 'bn'
-                ? 'অনলাইন ও অফলাইন উভয় মাধ্যমে উপস্থিতি ট্র্যাকিং, অটোমেটিক বাংলা এসএমএস অ্যালার্ট, এনসিটিবি গ্রেডবুক ও শিক্ষক বেতন ব্যবস্থাপনা।'
-                : 'Unified cloud ERP featuring automated Bangla SMS notifications, NCTB GPA 5.0 gradebook, BDT teacher payroll, 17-digit BDRIS encrypted dossiers, and seamless phpMyAdmin sync.'}
+                ? 'অনলাইন ও অফলাইন উভয় মাধ্যমে উপস্থিতি ট্র্যাকিং, এনসিটিবি গ্রেডবুক, শিক্ষার্থী প্রোফাইল ও শিক্ষক বেতন ব্যবস্থাপনা।'
+                : 'Unified cloud ERP featuring real-time attendance tracking, NCTB GPA 5.0 gradebook, BDT teacher payroll, and 17-digit BDRIS encrypted dossiers.'}
             </p>
 
             {/* Feature Highlights Grid */}
@@ -227,8 +227,8 @@ export const LoginPage: React.FC = () => {
                   <Smartphone className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-slate-200">{lang === 'bn' ? 'স্বয়ংক্রিয় এসএমএস' : 'Bangla SMS Gateway'}</h4>
-                  <p className="text-[11px] text-slate-400">{lang === 'bn' ? 'তাৎক্ষণিক অভিভাবক এলার্ট' : 'Real-time parent alerts'}</p>
+                  <h4 className="text-xs font-bold text-slate-200">{lang === 'bn' ? 'স্মার্ট উপস্থিতি' : 'Smart Attendance'}</h4>
+                  <p className="text-[11px] text-slate-400">{lang === 'bn' ? 'রিয়েলটাইম হাজিরা ট্র্যাকিং' : 'Real-time daily tracking'}</p>
                 </div>
               </div>
 

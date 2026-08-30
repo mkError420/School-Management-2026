@@ -184,12 +184,127 @@ input:focus, select:focus, textarea:focus {
 /* ── Smooth transitions globally ── */
 * { transition-property: color, background-color, border-color, box-shadow; transition-duration: 150ms; transition-timing-function: ease; }
 
+@page {
+  size: A4 portrait;
+  margin: 10mm 12mm;
+}
+
 @media print {
-  body {
-    background: white !important;
-    color: black !important;
+  /* 1. Hide full app chrome, headers, sidebars, buttons, toolbars */
+  header, 
+  aside, 
+  nav, 
+  footer, 
+  button,
+  input,
+  select,
+  .no-print,
+  .no-print * {
+    display: none !important;
+    visibility: hidden !important;
   }
-  .no-print { display: none !important; }
+
+  /* 2. Global Document Reset for Crisp Print / PDF Output */
+  html, body {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 10pt !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* 3. Main Container & Scroll Viewports */
+  #root,
+  .min-h-screen,
+  main {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    height: auto !important;
+    display: block !important;
+  }
+
+  /* 4. Flatten Grids to prevent side-panel clipping */
+  .grid,
+  .lg\:grid-cols-12,
+  .lg\:col-span-5,
+  .lg\:col-span-7,
+  .lg\:col-span-8 {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* 5. Modals with Printable Documents */
+  .fixed.inset-0 {
+    position: static !important;
+    display: block !important;
+    background: none !important;
+    backdrop-filter: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    box-shadow: none !important;
+  }
+
+  .fixed.inset-0 > div,
+  .max-w-lg,
+  .max-w-3xl,
+  .max-w-4xl {
+    max-width: 100% !important;
+    width: 100% !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    background: #ffffff !important;
+  }
+
+  /* 6. Specific Printable Document Targets */
+  .printable-receipt,
+  .printable-payslip,
+  .printable-marksheet,
+  .printable-dossier,
+  .printable-id-card {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+    border: 1px solid #cbd5e1 !important;
+    padding: 16px !important;
+    margin: 0 auto !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border-radius: 8px !important;
+    page-break-inside: avoid;
+  }
+
+  /* 7. Tables in Printable Documents */
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    page-break-inside: auto;
+  }
+
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  th, td {
+    border-color: #cbd5e1 !important;
+    color: #0f172a !important;
+  }
+
   .print-only { display: block !important; }
   .page-break { page-break-before: always; }
 }

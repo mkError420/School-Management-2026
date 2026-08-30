@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
   Users, UserCheck, Award, CreditCard, 
-  MessageSquare, TrendingUp, AlertTriangle, 
+  TrendingUp, AlertTriangle, Bell,
   CheckCircle2, PlusCircle, ArrowUpRight, 
   Calendar, PhoneCall, Send, ShieldAlert, 
   FileSpreadsheet, Receipt
@@ -33,7 +33,6 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
     attendance, 
     grades, 
     payrolls, 
-    smsLogs, 
     notices, 
     feePayments,
     auditLogs 
@@ -101,8 +100,8 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
             </h1>
             <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-2xl">
               {lang === 'bn' 
-                ? "সোনার পাঠশালা সমন্বিত স্কুল ব্যবস্থাপনা পোর্টালে আপনার শ্রেণি উপস্থিতি, স্বয়ংক্রিয় অভিভাবক এসএমএস ও বেতন পর্যবেক্ষণ করুন।"
-                : "Manage real-time student attendance, automated parent SMS notifications, NCTB GPA 5.0 gradebook, and BDT payroll seamlessly."}
+                ? "স্কুল ম্যানেজমেন্ট সমন্বিত পোর্টালে শ্রেণি উপস্থিতি, এনসিটিবি গ্রেডবুক ও শিক্ষক বেতন পর্যবেক্ষণ করুন।"
+                : "Manage real-time student attendance, NCTB GPA 5.0 gradebook, and BDT payroll seamlessly."}
             </p>
           </div>
 
@@ -115,11 +114,11 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
               <span>{t.takeAttendance}</span>
             </button>
             <button
-              onClick={onOpenUrgentNotice}
+              onClick={() => onNavigate('notices')}
               className="px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition flex items-center gap-1.5 cursor-pointer"
             >
-              <AlertTriangle className="w-4 h-4 text-amber-400" />
-              <span>{t.sendUrgentSMS}</span>
+              <Bell className="w-4 h-4 text-amber-400" />
+              <span>{lang === 'bn' ? "বিজ্ঞপ্তি প্রকাশ" : "Notice Board"}</span>
             </button>
           </div>
         </div>
@@ -205,22 +204,22 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
           </div>
         </div>
 
-        {/* SMS Delivered */}
+        {/* Active Notices */}
         <div 
-          onClick={() => onNavigate('sms')}
+          onClick={() => onNavigate('notices')}
           className="bg-slate-900 border border-slate-800 p-5 rounded-xl shadow-xs hover:border-slate-700 transition cursor-pointer"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">{t.smsDelivered}</span>
+            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">{t.navNotices}</span>
             <div className="p-1.5 rounded-lg bg-slate-800 text-slate-300">
-              <MessageSquare className="w-4 h-4" />
+              <Bell className="w-4 h-4" />
             </div>
           </div>
           <p className="text-2xl font-bold text-white mt-2">
-            {lang === 'bn' ? toBanglaDigits(smsLogs.length) : smsLogs.length}
+            {lang === 'bn' ? toBanglaDigits(notices.length) : notices.length}
           </p>
           <div className="flex items-center gap-1 text-xs text-amber-400 font-semibold mt-2">
-            <span>99.8% {lang === 'bn' ? "সফল" : "Success"}</span>
+            <span>{lang === 'bn' ? "প্রকাশিত সার্কুলার" : "Published"}</span>
           </div>
         </div>
 
@@ -354,7 +353,7 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
                     {lang === 'bn' ? "আজকের অনুপস্থিত শিক্ষার্থী" : "Today's Absentee Alerts"}
                   </h3>
                   <p className="text-[11px] text-slate-400">
-                    {lang === 'bn' ? "অভিভাবককে সরাসরি এসএমএস ও ফোন" : "Immediate parent notification"}
+                    {lang === 'bn' ? "অভিভাবকের সাথে সরাসরি যোগাযোগ" : "Direct guardian telephone contact"}
                   </p>
                 </div>
               </div>
@@ -388,7 +387,7 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
                       <div className="flex items-center gap-2 mt-2 pt-2 border-t border-slate-700/60">
                         <span className="text-[10px] text-emerald-400 font-semibold flex items-center gap-1">
                           <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-                          {lang === 'bn' ? "স্বয়ংক্রিয় এসএমএস প্রেরিত" : "SMS Sent Successfully"}
+                          {lang === 'bn' ? "অভিভাবক ডাটাবেজ যাচাইকৃত" : "Guardian Record Verified"}
                         </span>
                         <a 
                           href={`tel:${studentInfo?.guardianPhone}`} 

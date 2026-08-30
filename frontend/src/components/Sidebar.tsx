@@ -2,7 +2,7 @@ import React from 'react';
 import { 
   LayoutDashboard, UserCheck, Award, CreditCard, 
   Users, Receipt, Bell, ShieldCheck, Database, 
-  HeartHandshake, MessageSquare, History
+  HeartHandshake, History
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { translations, toBanglaDigits } from '../translations';
@@ -20,7 +20,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   isMobileOpen,
   onCloseMobile
 }) => {
-  const { currentUser, lang, smsBalance, notices } = useApp();
+  const { currentUser, lang, notices } = useApp();
   const t = translations[lang];
 
   // Role permissions check
@@ -38,13 +38,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
       label: t.navAttendance,
       icon: UserCheck,
       allowedRoles: ['super_admin', 'admin', 'teacher']
-    },
-    {
-      id: 'sms',
-      label: "SMS Gateway & Logs",
-      icon: MessageSquare,
-      badge: lang === 'bn' ? toBanglaDigits(smsBalance) : String(smsBalance),
-      allowedRoles: ['super_admin', 'admin']
     },
     {
       id: 'gradebook',
@@ -170,13 +163,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="hidden md:block shrink-0 sticky top-16 h-[calc(100vh-4rem)] z-20">
+      <aside className="hidden md:block shrink-0 sticky top-16 h-[calc(100vh-4rem)] z-20 no-print">
         {content}
       </aside>
 
       {/* Mobile Drawer */}
       {isMobileOpen && (
-        <div className="fixed inset-0 z-50 md:hidden flex">
+        <div className="fixed inset-0 z-50 md:hidden flex no-print">
           <div 
             className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity" 
             onClick={onCloseMobile} 

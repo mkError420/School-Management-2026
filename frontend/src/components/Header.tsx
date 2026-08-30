@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { 
   Globe, Shield, Bell, Wifi, WifiOff, RefreshCw, 
   LogOut, UserCheck, ChevronDown, CheckCircle2,
-  BookOpen, MessageSquare, AlertTriangle, Download,
+  BookOpen, AlertTriangle, Download,
   Menu, X
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
@@ -34,7 +34,6 @@ export const Header: React.FC<HeaderProps> = ({
     toggleOfflineMode, 
     offlineQueue, 
     syncOfflineQueue, 
-    smsBalance,
     notices,
     logout 
   } = useApp();
@@ -64,7 +63,7 @@ export const Header: React.FC<HeaderProps> = ({
   const unreadNotices = notices.filter(n => n.priority === 'urgent' || n.priority === 'high');
 
   return (
-    <header style={{background:'#0B0F1A', borderBottom:'1px solid #263450'}} className="sticky top-0 z-30 shadow-md">
+    <header style={{background:'#0B0F1A', borderBottom:'1px solid #263450'}} className="sticky top-0 z-30 shadow-md no-print">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-18">
           
@@ -108,19 +107,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Right Action Controls */}
           <div className="flex items-center gap-2 sm:gap-3">
             
-            {/* SMS Credit indicator */}
-            <div 
-              onClick={() => onNavigate('sms')}
-              className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium cursor-pointer transition"
-              style={{background:'#111827', border:'1px solid #263450', color:'#90A1B9'}}
-              title="SMS Credit Balance"
-            >
-              <MessageSquare className="w-3.5 h-3.5" style={{color:'#FEE685'}} />
-              <span style={{color:'#90A1B9'}}>SMS:</span>
-              <span className="font-bold" style={{color:'#FEE685'}}>
-                {lang === 'bn' ? toBanglaDigits(smsBalance) : smsBalance}
-              </span>
-            </div>
+
 
             {/* Offline Sync Mode Switcher */}
             <div className="flex items-center">
@@ -216,9 +203,6 @@ export const Header: React.FC<HeaderProps> = ({
                             </p>
                             <div className="flex items-center gap-2 mt-1 text-[10px] text-slate-500">
                               <span>{notice.publishedDate}</span>
-                              {notice.smsBroadcastSent && (
-                                <span className="text-emerald-400 font-medium">✓ SMS Dispatched</span>
-                              )}
                             </div>
                           </div>
                         </div>

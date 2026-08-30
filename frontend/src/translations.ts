@@ -31,7 +31,7 @@ export const translations = {
     
     // Navigation
     navDashboard: "Dashboard",
-    navAttendance: "Attendance & SMS",
+    navAttendance: "Attendance",
     navGradebook: "NCTB Gradebook",
     navPayroll: "Teacher Payroll",
     navStudents: "Student Profiles",
@@ -218,7 +218,7 @@ export const translations = {
     
     // Navigation
     navDashboard: "ড্যাশবোর্ড",
-    navAttendance: "উপস্থিতি ও এসএমএস",
+    navAttendance: "উপস্থিতি",
     navGradebook: "এনসিটিবি গ্রেডবুক",
     navPayroll: "শিক্ষক বেতন ও পে-রোল",
     navStudents: "শিক্ষার্থী তথ্যভাণ্ডার",

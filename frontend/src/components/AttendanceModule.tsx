@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
 import { 
   UserCheck, Calendar, Filter, Check, X, 
-  Clock, AlertCircle, Send, MessageSquare, 
-  Printer, Download, ShieldCheck, Sparkles, CheckCircle2 
+  Clock, AlertCircle, Printer, Download, ShieldCheck, Sparkles, CheckCircle2 
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { translations, toBanglaDigits } from '../translations';
 import { AttendanceStatus } from '../types';
 
 export const AttendanceModule: React.FC = () => {
-  const { students, attendance, markBatchAttendance, lang, smsBalance } = useApp();
+  const { students, attendance, markBatchAttendance, lang } = useApp();
   const t = translations[lang];
 
   const [selectedClass, setSelectedClass] = useState<string>("Class 9");
   const [selectedSection, setSelectedSection] = useState<string>("Padma");
   const [selectedDate, setSelectedDate] = useState<string>("2026-08-29");
-  const [autoSmsAbsent, setAutoSmsAbsent] = useState<boolean>(true);
   const [saveSuccessNotice, setSaveSuccessNotice] = useState<string | null>(null);
 
   // Filter students by selected class & section
@@ -89,12 +87,11 @@ export const AttendanceModule: React.FC = () => {
       remarks: studentStatusMap[s.id]?.remarks
     }));
 
-    markBatchAttendance(selectedClass, selectedSection, selectedDate, payload, autoSmsAbsent);
+    markBatchAttendance(selectedClass, selectedSection, selectedDate, payload, false);
 
-    const absentCount = payload.filter(p => p.status === 'absent').length;
     const msg = lang === 'bn' 
-      ? `উপস্থিতি সংরক্ষিত হয়েছে! ${absentCount > 0 && autoSmsAbsent ? `${toBanglaDigits(absentCount)}টি অনুপস্থিতি এসএমএস প্রেরিত হয়েছে।` : ''}`
-      : `Attendance saved successfully! ${absentCount > 0 && autoSmsAbsent ? `${absentCount} automated SMS dispatched.` : ''}`;
+      ? `উপস্থিতি সফলভাবে সংরক্ষিত হয়েছে!`
+      : `Attendance saved successfully!`;
     
     setSaveSuccessNotice(msg);
     setTimeout(() => setSaveSuccessNotice(null), 4000);
@@ -153,7 +150,6 @@ export const AttendanceModule: React.FC = () => {
             <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
             <span>{saveSuccessNotice}</span>
           </div>
-          <span className="text-[11px] text-emerald-400 font-mono">SMS Balance: {smsBalance}</span>
         </div>
       )}
 
@@ -227,27 +223,7 @@ export const AttendanceModule: React.FC = () => {
 
         </div>
 
-        {/* Automated SMS Toggle & Preview */}
-        <div className="mt-4 pt-3 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-950/60 p-3 rounded-lg border border-slate-800">
-          <label className="flex items-center gap-2.5 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={autoSmsAbsent}
-              onChange={(e) => setAutoSmsAbsent(e.target.checked)}
-              className="w-4 h-4 text-emerald-500 rounded border-slate-700 bg-slate-900 focus:ring-emerald-500"
-            />
-            <span className="text-xs font-semibold text-slate-200 flex items-center gap-1.5">
-              <MessageSquare className="w-3.5 h-3.5 text-emerald-400" />
-              {t.autoSendAbsenceSMS}
-            </span>
-          </label>
 
-          <div className="text-[11px] text-slate-400 flex items-center gap-2 font-mono">
-            <span className="text-emerald-400 font-semibold">Teletalk / GP Gateway Active</span>
-            <span>•</span>
-            <span>৳0.45/SMS</span>
-          </div>
-        </div>
       </div>
 
       {/* Summary Stat Pills */}
@@ -305,7 +281,6 @@ export const AttendanceModule: React.FC = () => {
                 <th className="py-3 px-4 hidden sm:table-cell">{t.guardianContact}</th>
                 <th className="py-3 px-4 text-center">{t.status}</th>
                 <th className="py-3 px-4 hidden md:table-cell">In-Time / Remarks</th>
-                <th className="py-3 px-4 text-right no-print">Auto SMS Status</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/60">
@@ -418,30 +393,11 @@ export const AttendanceModule: React.FC = () => {
                         </span>
                       ) : currentStatus === 'absent' ? (
                         <span className="text-[11px] text-red-400 font-medium italic">
-                          Absence SMS Queued
+                          {lang === 'bn' ? "অনুপস্থিত" : "Absent"}
                         </span>
                       ) : (
                         <span className="text-[11px] text-slate-400">
                           On time (08:15 AM)
-                        </span>
-                      )}
-                    </td>
-
-                    {/* Auto SMS Indicator */}
-                    <td className="py-3 px-4 text-right no-print">
-                      {currentStatus === 'absent' ? (
-                        <span className="inline-flex items-center gap-1 text-[10px] font-bold text-red-400 bg-red-950/80 px-2 py-0.5 rounded-full border border-red-800">
-                          <Send className="w-2.5 h-2.5" />
-                          SMS to Guardian
-                        </span>
-                      ) : currentStatus === 'late' ? (
-                        <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-400 bg-amber-950/80 px-2 py-0.5 rounded-full border border-amber-800">
-                          <Send className="w-2.5 h-2.5" />
-                          Late SMS
-                        </span>
-                      ) : (
-                        <span className="text-[10px] text-slate-400 font-medium">
-                          No Alert Needed
                         </span>
                       )}
                     </td>
