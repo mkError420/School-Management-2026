@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { 
   User, UserRole, Language, Student, Teacher, AttendanceRecord, 
   ExamGradeRecord, TeacherPayroll, SMSNotification, SchoolNotice, 
-  FeePayment, GuardianInquiry, AuditLog, OfflineSyncItem, AttendanceStatus 
+  FeePayment, GuardianInquiry, AuditLog, OfflineSyncItem, AttendanceStatus, Tenant 
 } from '../types';
 import { 
   initialStudents, initialTeachers, initialAttendanceRecords, 
@@ -31,6 +31,11 @@ interface AppContextType {
   feePayments: FeePayment[];
   inquiries: GuardianInquiry[];
   auditLogs: AuditLog[];
+  
+  // Multitenancy
+  tenants: Tenant[];
+  selectedTenant: Tenant | null;
+  setSelectedTenant: (tenant: Tenant | null) => void;
   
   // Offline sync
   isOffline: boolean;
@@ -198,6 +203,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const saved = localStorage.getItem('sonar_audit');
     return saved ? JSON.parse(saved) : initialAuditLogs;
   });
+
+  const [tenants, setTenants] = useState<Tenant[]>([]);
+  const [selectedTenant, setSelectedTenant] = useState<Tenant | null>(null);
 
   const [isOffline, setIsOffline] = useState<boolean>(false);
   const [offlineQueue, setOfflineQueue] = useState<OfflineSyncItem[]>([]);
@@ -718,6 +726,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       feePayments,
       inquiries,
       auditLogs,
+      tenants,
+      selectedTenant,
+      setSelectedTenant,
       isOffline,
       setIsOffline,
       toggleOfflineMode,

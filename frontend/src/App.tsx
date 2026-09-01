@@ -4,6 +4,7 @@ import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
 import { DashboardOverview } from './components/DashboardOverview';
 import { LoginPage } from './components/LoginPage';
+import { SuperAdminDashboard } from './components/SuperAdminDashboard';
 
 // Lazy load heavy modules for ultra-fast initial load
 const AttendanceModule = lazy(() => import('./components/AttendanceModule').then(m => ({ default: m.AttendanceModule })));
@@ -27,9 +28,12 @@ const ModuleLoader: React.FC = () => (
 const MainLayout: React.FC = () => {
   const [currentTab, setCurrentTab] = useState<string>("dashboard");
   const [isMobileNavOpen, setIsMobileNavOpen] = useState<boolean>(false);
+  const { user } = useApp();
 
   const renderContent = () => {
     switch (currentTab) {
+      case 'super_admin':
+        return <SuperAdminDashboard />;
       case 'dashboard':
         return (
           <DashboardOverview 

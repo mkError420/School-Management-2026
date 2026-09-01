@@ -278,6 +278,158 @@ try {
             }
             break;
 
+        // --- 7. SUPER ADMIN: TENANT MANAGEMENT ---
+        case 'superadmin/tenants':
+            if ($method === 'GET') {
+                $stmt = $pdo->query("
+                    SELECT t.*, 
+                           (SELECT COUNT(*) FROM users WHERE tenant_id = t.id) as user_count,
+                           (SELECT COUNT(*) FROM students WHERE tenant_id = t.id) as student_count
+                    FROM tenants t
+                    ORDER BY t.created_at DESC
+                ");
+                jsonResponse(['success' => true, 'tenants' => $stmt->fetchAll()]);
+            } elseif ($method === 'POST') {
+                $input = getJsonInput();
+                $stmt = $pdo->prepare("
+                    INSERT INTO tenants (
+                        tenant_code, school_name_en, school_name_bn, domain, subdomain,
+                        address, upazila, district, phone, email, logo_url, status,
+                        subscription_plan, subscription_expiry, max_students, max_teachers, settings_json
+                    ) VALUES (
+                        :code, :name_en, :name_bn, :domain, :subdomain,
+                        :address, :upazila, :district, :phone, :email, :logo, :status,
+                        :plan, :expiry, :max_students, :max_teachers, :settings
+                    )
+                ");
+                $stmt->execute([
+                    ':code' => $input['tenantCode'] ?? ('TNT-' . strtoupper(substr(uniqid(), -6))),
+                    ':name_en' => $input['schoolNameEn'] ?? '',
+                    ':name_bn' => $input['schoolNameBn'] ?? '',
+                    ':domain' => $input['domain'] ?? '',
+                    ':subdomain' => $input['subdomain'] ?? '',
+                    ':address' => $input['address'] ?? '',
+                    ':upazila' => $input['upazila'] ?? '',
+                    ':district' => $input['district'] ?? '',
+                    ':phone' => $input['phone'] ?? '',
+                    ':email' => $input['email'] ?? '',
+                    ':logo' => $input['logoUrl'] ?? null,
+                    ':status' => $input['status'] ?? 'active',
+                    ':plan' => $input['subscriptionPlan'] ?? 'basic',
+                    ':expiry' => $input['subscriptionExpiry'] ?? null,
+                    ':max_students' => $input['maxStudents'] ?? 500,
+                    ':max_teachers' => $input['maxTeachers'] ?? 50,
+                    ':settings' => json_encode($input['settings'] ?? [])
+                ]);
+                $newId = $pdo->lastInsertId();
+                jsonResponse(['success' => true, 'id' => $newId, 'message' => 'Tenant created successfully']);
+            }
+            break;
+
+        case 'superadmin/tenants/update':
+            if ($method === 'POST') {
+                $input = getJsonInput();
+                $stmt = $pdo->prepare("
+                    UPDATE tenants SET
+                        school_name_en = :name_en,
+                        school_name_bn = :name_bn,
+                        domain = :domain,
+                        subdomain = :subdomain,
+                        address = :address,
+                        upazila = :upazila,
+                        district = :district,
+                        phone = :phone,
+                        email = :email,
+                        logo_url = :logo,
+                        status = :status,
+                        subscription_plan = :plan,
+                        subscription_expiry = :expiry,
+                        max_students = :max_students,
+                        max_teachers = :max_teachers,
+                        settings_json = :settings
+                    WHERE id = :id
+                ");
+                $stmt->execute([
+                    ':id' => $input['id'] ?? 0,
+                    ':name_en' => $input['schoolNameEn'] ?? '',
+                    ':name_bn' => $input['schoolNameBn'] ?? '',
+                    ':domain' => $input['domain'] ?? '',
+                    ':subdomain' => $input['subdomain'] ?? '',
+                    ':address' => $input['address'] ?? '',
+                    ':upazila' => $input['upazila'] ?? '',
+                    ':district' => $input['district'] ?? '',
+                    ':phone' => $input['phone'] ?? '',
+                    ':email' => $input['email'] ?? '',
+                    ':logo' => $input['logoUrl'] ?? null,
+                    ':status' => $input['status'] ?? 'active',
+                    ':plan' => $input['subscriptionPlan'] ?? 'basic',
+                    ':expiry' => $input['subscriptionExpiry'] ?? null,
+                    ':max_students' => $input['maxStudents'] ?? 500,
+                    ':max_teachers' => $input['maxTeachers'] ?? 50,
+                    ':settings' => json_encode($input['settings'] ?? [])
+                ]);
+                jsonResponse(['success' => true, 'message' => 'Tenant updated successfully']);
+            }
+            break;
+
+        case 'superadmin/tenants/delete':
+            if ($method === 'POST') {
+                $input = getJsonInput();
+                $stmt = $pdo->prepare("DELETE FROM tenants WHERE id = :id");
+                $stmt->execute([':id' => $input['id'] ?? 0]);
+                jsonResponse(['success' => true, 'message' => 'Tenant deleted successfully']);
+            }
+            break;
+
+        // --- 8. SUPER ADMIN: SYSTEM STATS ---
+        case 'superadmin/stats':
+            if ($method === 'GET') {
+                $stats = [];
+                
+                // Total tenants
+                $stats['total_tenants'] = $pdo->query("SELECT COUNT(*) FROM tenants")->fetchColumn();
+                $stats['active_tenants'] = $pdo->query("SELECT COUNT(*) FROM tenants WHERE status = 'active'")->fetchColumn();
+                
+                // Total users by role
+                $stats['total_users'] = $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
+                $stats['total_students'] = $pdo->query("SELECT COUNT(*) FROM students")->fetchColumn();
+                $stats['total_teachers'] = $pdo->query("SELECT COUNT(*) FROM teachers")->fetchColumn();
+                
+                // Recent activity
+                $stats['recent_logins'] = $pdo->query("SELECT COUNT(*) FROM users WHERE last_login_at >= DATE_SUB(NOW(), INTERVAL 24 HOUR)")->fetchColumn();
+                
+                // Database size (approximate)
+                $stats['db_size_mb'] = round($pdo->query("SELECT SUM(data_length + index_length) / 1024 / 1024 FROM information_schema.tables WHERE table_schema = DATABASE()")->fetchColumn(), 2);
+                
+                jsonResponse(['success' => true, 'stats' => $stats]);
+            }
+            break;
+
+        // --- 9. SUPER ADMIN: USER MANAGEMENT ACROSS TENANTS ---
+        case 'superadmin/users':
+            if ($method === 'GET') {
+                $tenantId = $_GET['tenant_id'] ?? null;
+                $sql = "
+                    SELECT u.*, r.role_name, r.display_name_en, t.school_name_en as tenant_name
+                    FROM users u
+                    JOIN roles r ON u.role_id = r.id
+                    LEFT JOIN tenants t ON u.tenant_id = t.id
+                    WHERE 1=1
+                ";
+                $params = [];
+                
+                if ($tenantId && $tenantId !== 'all') {
+                    $sql .= " AND u.tenant_id = :tenant_id";
+                    $params[':tenant_id'] = $tenantId;
+                }
+                
+                $sql .= " ORDER BY u.created_at DESC LIMIT 100";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute($params);
+                jsonResponse(['success' => true, 'users' => $stmt->fetchAll()]);
+            }
+            break;
+
         default:
             jsonResponse(['error' => 'Invalid endpoint action', 'action' => $action], 404);
             break;

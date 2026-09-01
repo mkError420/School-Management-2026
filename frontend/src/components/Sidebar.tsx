@@ -2,7 +2,7 @@ import React from 'react';
 import { 
   LayoutDashboard, UserCheck, Award, CreditCard, 
   Users, Receipt, Bell, ShieldCheck, Database, 
-  HeartHandshake, History
+  HeartHandshake, History, Building2
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { translations, toBanglaDigits } from '../translations';
@@ -27,6 +27,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const role = currentUser.role;
 
   const navItems = [
+    {
+      id: 'super_admin',
+      label: lang === 'bn' ? 'সুপার অ্যাডমিন' : 'Super Admin',
+      icon: Building2,
+      allowedRoles: ['super_admin']
+    },
     {
       id: 'dashboard',
       label: t.navDashboard,

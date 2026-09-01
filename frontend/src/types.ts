@@ -14,6 +14,42 @@ export interface User {
   designation?: string;
   permissions: string[];
   studentId?: string; // For guardian/student role
+  tenantId?: string; // For multitenancy
+}
+
+export interface Tenant {
+  id: string;
+  tenantCode: string;
+  schoolNameEn: string;
+  schoolNameBn: string;
+  domain: string;
+  subdomain: string;
+  address: string;
+  upazila: string;
+  district: string;
+  phone: string;
+  email: string;
+  logoUrl?: string;
+  status: 'active' | 'suspended' | 'inactive';
+  subscriptionPlan: 'free' | 'basic' | 'premium' | 'enterprise';
+  subscriptionExpiry?: string;
+  maxStudents: number;
+  maxTeachers: number;
+  settings?: Record<string, any>;
+  userCount?: number;
+  studentCount?: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SystemStats {
+  totalTenants: number;
+  activeTenants: number;
+  totalUsers: number;
+  totalStudents: number;
+  totalTeachers: number;
+  recentLogins: number;
+  dbSizeMb: number;
 }
 
 export type AttendanceStatus = 'present' | 'absent' | 'late' | 'excused';
